@@ -1,0 +1,54 @@
+"use client";
+import { useState } from "react";
+import { Flex } from "@chakra-ui/react";
+import PokemonCard from "./pokemon-card";
+import { useRouter } from "next/navigation";
+import useSWR from "swr";
+import Pagination from "./pagination";
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
+interface PokemonListProps {
+  searchQuery: string;
+}
+
+export default function PokemonList({ searchQuery }: PokemonListProps) {
+  const [page, setPage] = useState(1);
+  const router = useRouter();
+
+  const { data, error } = useSWR(
+    searchQuery
+      ? `https://pokeapi.co/api/v2/pokemon/${searchQuery}`
+      : `https://pokeapi.co/api/v2/pokemon?limit=20&offset=${(page - 1) * 20}`,
+    fetcher
+  );
+
+  if (error) return <div className="text-red-500  bg-gray-900 text-xl min-h-screen">⚠️ Pokémon not found!</div>;
+  if (!data) return <div className="text-white text-xl bg-gray-900 min-h-screen">Loading...</div>;
+
+  const handlePokemonClick = (id: number) => {
+    router.push(`/pokemon/${id}`);
+  };
+
+  return (
+    <div className="bg-gray-900 pt-12 pb-4 min-h-screen">
+      <Flex wrap="wrap" gapY="20" gapX={"6"} justify="center">
+        {searchQuery ? (
+          <PokemonCard key={data.name} name={data.name}/>
+        ) : (
+          data.results.map((pokemon: { name: string; url: string }, index: number) => (
+            <PokemonCard key={pokemon.name} name={pokemon.name} onClick={() => handlePokemonClick((page - 1) * 20 + index + 1)} />
+          ))
+        )}
+      </Flex>
+
+      {!searchQuery && (
+        <Pagination
+          currentPage={page}
+          totalPages={Math.ceil(data.count / 20)}
+          onPageChange={setPage}
+        />
+      )}
+    </div>
+  );
+}
