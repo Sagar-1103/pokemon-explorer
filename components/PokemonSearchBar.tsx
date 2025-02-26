@@ -3,14 +3,16 @@ import { useState } from "react";
 import Image from "next/image";
 import { FaSearch } from "react-icons/fa";
 import Pokeball from "../public/pokeball.svg";
-import { FiFilter } from "react-icons/fi";
 import { useRouter } from "next/navigation";
+import MobileNavbarToggle from "./MobileNavbarToggle";
 
 interface PokemonSearchBarProps {
-  onSearch: (query: string) => void;
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
 }
 
-const PokemonSearchBar = ({ onSearch }: PokemonSearchBarProps) => {
+
+const PokemonSearchBar = (props:PokemonSearchBarProps) => {
   const [query, setQuery] = useState("");
   const router = useRouter();
 
@@ -27,8 +29,10 @@ const PokemonSearchBar = ({ onSearch }: PokemonSearchBarProps) => {
   };
 
   return (
-    <div className="flex justify-center py-4 bg-gray-900">
-      <div className="flex relative w-[80%]">
+    <div>
+      <MobileNavbarToggle {...props} />
+    <div className="flex justify-end md:justify-center py-5 bg-gray-900">
+      <div className="flex relative w-[80%] pr-2 md:pr-0">
         <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
           <Image src={Pokeball} alt="Pokéball" className="w-6 h-6 animate-spin-slow" />
         </div>
@@ -37,15 +41,16 @@ const PokemonSearchBar = ({ onSearch }: PokemonSearchBarProps) => {
           type="text"
           placeholder="Search Pokémon..."
           value={query}
+          autoCapitalize="words"
           onChange={handleSearch}
           onKeyDown={handleKeyDown} 
           className="w-full bg-gray-800 text-yellow-300 border-2 border-yellow-400 focus:border-red-500 focus:ring-2 focus:ring-red-500 pl-12 pr-10 py-2 rounded-full shadow-md placeholder-yellow-500 outline-none transition-all"
         />
 
-        <FaSearch className=" absolute right-16 top-1/2 transform -translate-y-1/2 text-yellow-300" size={18} />
-        <FiFilter className="top-1/2 font-bold right-3 absolute transform -translate-y-1/2 mx-2 text-yellow-300" size={20} />
+        <FaSearch className=" absolute right-5 top-1/2 transform -translate-y-1/2 text-yellow-300" size={18} />
       </div>
       
+    </div>
     </div>
   );
 };

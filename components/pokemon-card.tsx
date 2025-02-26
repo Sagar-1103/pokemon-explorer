@@ -1,5 +1,5 @@
 "use client";
-import { Box, Badge, Image, Text, VStack } from "@chakra-ui/react";
+import { Box, Badge, Image, Text, VStack, Skeleton } from "@chakra-ui/react";
 import useSWR from "swr";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -12,8 +12,8 @@ const getTypeColor = (type: string) => {
     electric: "yellow.400",
     bug: "green.600",
     poison: "purple.500",
-    normal: "gray.300",
-    flying: "blue.200",
+    normal: "gray.400",
+    flying: "blue.300",
     fairy: "pink.300",
     psychic: "pink.400",
     ghost: "purple.700",
@@ -29,25 +29,24 @@ const getTypeColor = (type: string) => {
 };
 
 interface PokemonCardProps {
-  name:string,
-  onClick?:()=>void
+  name: string;
+  onClick?: () => void;
 }
 
-const PokemonCard = ({ name,onClick }: PokemonCardProps) => {
+const PokemonCard = ({ name, onClick }: PokemonCardProps) => {
   const { data: pokemon, error } = useSWR(
     `https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`,
     fetcher
   );
 
   if (error) return <div>Failed to load</div>;
-  if (!pokemon) return <div>Loading...</div>;
 
   const imageUrl =
-    pokemon.sprites?.other?.["official-artwork"]?.front_default || "";
-  const primaryType = pokemon.types?.[0]?.type?.name || "normal";
+    pokemon?.sprites?.other?.["official-artwork"]?.front_default || "";
+  const primaryType = pokemon?.types?.[0]?.type?.name || "normal";
   const bgColor = getTypeColor(primaryType);
   console.log(bgColor);
-  const paddedId = `#${pokemon.id.toString().padStart(3, "0")}`;
+  const paddedId = `#${pokemon?.id.toString().padStart(3, "0")}`;
 
   return (
     <Box
@@ -62,41 +61,60 @@ const PokemonCard = ({ name,onClick }: PokemonCardProps) => {
       className="group"
       onClick={onClick}
     >
-      <Box
-        position="absolute"
-        top="5%"
-        left="50%"
-        transform="translate(-50%, -50%)"
-      >
-        <Image src={imageUrl} className="group-hover:scale-[130%] transition-transform duration-200 ease-in-out" alt={pokemon.name} boxSize="100px" />
-      </Box>
+      {!pokemon && (
+        <Skeleton
+          height="100%"
+          width="100%"
+          borderRadius="lg"
+        />
+      )}
 
-      <VStack>
-        <Text fontSize="lg" fontWeight="bold" textTransform="uppercase">
-          {pokemon.name}
-        </Text>
-        <Text fontSize="sm" color="gray.500">
-          {paddedId}
-        </Text>
-      </VStack>
+      {pokemon && (
+        <Box
+          position="absolute"
+          top="5%"
+          left="50%"
+          transform="translate(-50%, -50%)"
+        >
+          <Image
+            src={imageUrl}
+            className="group-hover:scale-[130%] transition-transform duration-200 ease-in-out"
+            alt={pokemon.name}
+            boxSize="100px"
+          />
+        </Box>
+      )}
 
-      <Box mt={2}>
-        {pokemon.types.map((t: any) => (
-          <Badge
-            key={t.type.name}
-            bg={getTypeColor(t.type.name)}
-            color="white"
-            borderRadius="full"
-            px={3}
-            py={1}
-            fontSize="sm"
-            mx={1}
-            className="capitalize"
-          >
-            {t.type.name}
-          </Badge>
-        ))}
-      </Box>
+      {pokemon && (
+        <VStack>
+          <Text fontSize="lg" className="text-gray-600" fontWeight="bold" textTransform="uppercase">
+            {pokemon.name}
+          </Text>
+          <Text fontSize="sm" color="gray.500">
+            {paddedId}
+          </Text>
+        </VStack>
+      )}
+
+      {pokemon && (
+        <Box mt={2}>
+          {pokemon.types.map((t: any) => (
+            <Badge
+              key={t.type.name}
+              bg={getTypeColor(t.type.name)}
+              color="white"
+              borderRadius="full"
+              px={3}
+              py={1}
+              fontSize="sm"
+              mx={1}
+              className="capitalize"
+            >
+              {t.type.name}
+            </Badge>
+          ))}
+        </Box>
+      )}
     </Box>
   );
 };

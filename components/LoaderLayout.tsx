@@ -17,7 +17,7 @@ export default function LoaderLayout({ children }: { children: React.ReactNode }
   ) : (
     <Provider>
       <Sidebar />
-      <div className="ml-20">
+      <div className="md:ml-20">
       {children}
       </div>
     </Provider>

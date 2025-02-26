@@ -4,10 +4,14 @@ import Image from "next/image";
 import Pokeball from "../public/pokeball.svg";
 import Cover from "../public/cover.jpg";
 
-export default function Loading() {
+interface LoadingProps {
+  hidden?:boolean;
+}
+
+export default function Loading({hidden}:LoadingProps) {
   return (
     <div className="flex items-center justify-center h-screen bg-red-500">
-      <div style={{ backgroundImage: `url(${Cover.src})` }} className="absolute inset-0 bg-cover bg-center opacity-20" />
+      {!hidden && <div style={{ backgroundImage: `url(${Cover.src})` }} className="absolute inset-0 bg-cover bg-center opacity-20" />}
       <motion.div
         className="rounded-full relative overflow-hidden shadow-lg"
         animate={{
