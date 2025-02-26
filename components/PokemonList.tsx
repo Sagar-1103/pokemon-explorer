@@ -24,7 +24,12 @@ export default function PokemonList({ searchQuery }: PokemonListProps) {
     fetcher
   );
 
-  if (error) return <div className="text-red-500  bg-gray-900 text-xl min-h-screen">⚠️ Pokémon not found!</div>;
+  if (error)
+    return (
+      <div className="text-red-500  bg-gray-900 text-xl min-h-screen">
+        ⚠️ Pokémon not found!
+      </div>
+    );
   if (!data) return <Loading hidden={true} transparent={true} />;
 
   const handlePokemonClick = (id: number) => {
@@ -32,17 +37,26 @@ export default function PokemonList({ searchQuery }: PokemonListProps) {
   };
 
   return (
-    <div className="bg-gray-900 pt-12 pb-4 min-h-screen">
-      <Flex wrap="wrap" gapY="20" gapX={"6"} justify="center">
-        {searchQuery ? (
-          <PokemonCard key={data.name} name={data.name}/>
-        ) : (
-          data.results.map((pokemon: { name: string; url: string }, index: number) => (
-            <PokemonCard key={pokemon.name} name={pokemon.name} onClick={() => handlePokemonClick((page - 1) * 20 + index + 1)} />
-          ))
-        )}
-      </Flex>
-
+    <>
+      <div className="bg-gray-900 pt-12 pb-4 min-h-screen">
+        <Flex wrap="wrap" gapY="20" gapX={"6"} justify="center">
+          {searchQuery ? (
+            <PokemonCard key={data.name} name={data.name} />
+          ) : (
+            data.results.map(
+              (pokemon: { name: string; url: string }, index: number) => (
+                <PokemonCard
+                  key={pokemon.name}
+                  name={pokemon.name}
+                  onClick={() =>
+                    handlePokemonClick((page - 1) * 20 + index + 1)
+                  }
+                />
+              )
+            )
+          )}
+        </Flex>
+      </div>
       {!searchQuery && (
         <Pagination
           currentPage={page}
@@ -50,6 +64,6 @@ export default function PokemonList({ searchQuery }: PokemonListProps) {
           onPageChange={setPage}
         />
       )}
-    </div>
+    </>
   );
 }
