@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Flex } from "@chakra-ui/react";
 import PokemonCard from "./pokemon-card";
 import { useRouter } from "next/navigation";
@@ -24,6 +24,10 @@ export default function PokemonList({ searchQuery }: PokemonListProps) {
     fetcher
   );
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [page]);
+  
   if (error)
     return (
       <div className="text-red-500  bg-gray-900 text-xl min-h-screen">
