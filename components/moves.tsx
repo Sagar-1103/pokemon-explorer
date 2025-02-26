@@ -13,7 +13,7 @@ export default function Moves({ typeGradient, moves }: any) {
         {moves?.slice(0, 16)?.map((move: { move: { name: string } }) => (
           <div
             key={move.move.name}
-            className="p-3 bg-white rounded-lg text-gray-700 text-sm md:text-base capitalize shadow-sm text-center transition duration-200"
+            className="p-3 bg-white rounded-lg text-gray-700 text-sm md:text-base font-semibold capitalize shadow-sm text-center transition duration-200"
           >
             {move.move.name.replace(/-/g, " ")}
           </div>

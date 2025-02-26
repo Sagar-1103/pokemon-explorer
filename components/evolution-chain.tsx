@@ -61,8 +61,8 @@ export default function EvolutionChain({evolutionChain, typeGradient, speciesDat
       </div>
       
       {speciesData?.flavor_text_entries && (
-        <div className="mt-4 sm:mt-6 bg-gray-100 p-3 sm:p-4 rounded-lg text-gray-700 italic text-sm sm:text-base">
-          &quot{speciesData.flavor_text_entries.find((entry: any) => entry.language.name === 'en')?.flavor_text.replace(/\f/g, ' ')}&quot
+        <div className="mt-4 sm:mt-6 font-semibold bg-gray-100 p-3 sm:p-4 rounded-lg text-gray-700 italic text-sm sm:text-base">
+          &apos;&apos; {speciesData.flavor_text_entries.find((entry: any) => entry.language.name === 'en')?.flavor_text.replace(/\f/g, ' ')} &apos;&apos;
         </div>
       )}
     </div>

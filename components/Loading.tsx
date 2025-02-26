@@ -6,11 +6,12 @@ import Cover from "../public/cover.jpg";
 
 interface LoadingProps {
   hidden?:boolean;
+  transparent?:boolean;
 }
 
-export default function Loading({hidden}:LoadingProps) {
+export default function Loading({hidden,transparent}:LoadingProps) {
   return (
-    <div className="flex items-center justify-center h-screen bg-red-500">
+    <div className={`flex items-center justify-center h-screen ${!transparent && "bg-red-500" }`}>
       {!hidden && <div style={{ backgroundImage: `url(${Cover.src})` }} className="absolute inset-0 bg-cover bg-center opacity-20" />}
       <motion.div
         className="rounded-full relative overflow-hidden shadow-lg"

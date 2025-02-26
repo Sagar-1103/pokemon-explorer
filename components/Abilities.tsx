@@ -15,11 +15,11 @@ export default function Abilities({typeGradient,abilities}:any) {
                       className={`bg-white p-4 rounded-lg shadow-sm group hover:shadow-md transition duration-200`}
                     >
                       <div className="flex justify-between items-center">
-                        <span className="text-gray-700 text-lg capitalize font-medium group-hover:text-gray-900">
+                        <span className="text-gray-700 font-semibold text-lg capitalize  group-hover:text-gray-900">
                           {ability.ability.name.replace("-", " ")}
                         </span>
                         {ability.is_hidden && (
-                          <span className="bg-gray-200 text-gray-600 text-xs px-2 py-1 rounded-full">
+                          <span className="bg-gray-200 font-medium text-gray-600 text-xs px-2 py-1 rounded-full">
                             Hidden
                           </span>
                         )}

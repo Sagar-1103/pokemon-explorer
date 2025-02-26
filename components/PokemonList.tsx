@@ -5,6 +5,7 @@ import PokemonCard from "./pokemon-card";
 import { useRouter } from "next/navigation";
 import useSWR from "swr";
 import Pagination from "./pagination";
+import Loading from "./Loading";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -24,7 +25,7 @@ export default function PokemonList({ searchQuery }: PokemonListProps) {
   );
 
   if (error) return <div className="text-red-500  bg-gray-900 text-xl min-h-screen">⚠️ Pokémon not found!</div>;
-  if (!data) return <div className="text-white text-xl bg-gray-900 min-h-screen">Loading...</div>;
+  if (!data) return <Loading hidden={true} transparent={true} />;
 
   const handlePokemonClick = (id: number) => {
     router.push(`/pokemon/${id}`);

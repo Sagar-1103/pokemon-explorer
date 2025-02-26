@@ -87,7 +87,7 @@ const PokemonCard = ({ name, onClick }: PokemonCardProps) => {
 
       {pokemon && (
         <VStack>
-          <Text fontSize="lg" className="text-gray-600" fontWeight="bold" textTransform="uppercase">
+          <Text fontFamily="Poppins, sans-serif" fontSize="lg" className="text-gray-600" fontWeight="bold" textTransform="uppercase">
             {pokemon.name}
           </Text>
           <Text fontSize="sm" color="gray.500">

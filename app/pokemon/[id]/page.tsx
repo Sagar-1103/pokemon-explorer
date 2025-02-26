@@ -173,7 +173,7 @@ export default function PokemonPage({
             className="flex items-center gap-2 text-gray-600 hover:text-black transition"
           >
             <ArrowLeft size={20} />
-            <span className="text-sm sm:text-lg font-medium">Back</span>
+            <span className="text-sm sm:text-lg font-bold">Back</span>
           </Link>
           <div className="flex items-center gap-4">
             <button className="text-gray-600 hover:text-red-500 transition">
@@ -316,7 +316,7 @@ export default function PokemonPage({
               </div>
               <div className="mt-4 sm:mt-6 p-2 sm:p-3 bg-white rounded-lg">
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-700 font-medium">Total</span>
+                  <span className="text-gray-700 font-semibold">Total</span>
                   <span className="text-gray-800 font-bold">
                     {pokemon?.stats?.reduce(
                       (sum: number, stat: { base_stat: number }) =>
@@ -368,7 +368,7 @@ export default function PokemonPage({
               </div>
               <div className="mt-6 p-3 bg-white rounded-lg">
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-700 font-medium">Total</span>
+                  <span className="text-gray-700 font-semibold">Total</span>
                   <span className="text-gray-800 font-bold">
                     {pokemon?.stats?.reduce(
                       (sum: number, stat: { base_stat: number }) =>

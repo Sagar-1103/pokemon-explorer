@@ -15,13 +15,13 @@ export default function GameVersions({ typeGradient, game_indices }: any) {
           .map((game: { version: { name: string } }) => (
             <div
               key={game.version.name}
-              className="bg-white p-2 rounded-lg text-gray-700 text-sm capitalize shadow-sm text-center"
+              className="bg-white font-semibold p-2 rounded-lg text-gray-700 text-sm capitalize shadow-sm text-center"
             >
               {game.version.name.replace("-", " ")}
             </div>
           ))}
         {game_indices?.length > 8 && (
-          <div className="col-span-2 text-center mt-2">
+          <div className="col-span-2 text-center ">
             <span className="text-gray-500 text-sm">
               +{game_indices?.length - 8} more versions
             </span>
